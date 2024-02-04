@@ -10,8 +10,10 @@ tree = app_commands.CommandTree(client)
 
 @client.event
 async def on_ready():
+    await tree.sync(guild=discord.Object(id=1006659664504688722))
     print("Ready!")
 
+@tree.command(name="ficha", description="Veja a ficha do personagem!(kira, triton, philip, gomes, art ou john)", guild=discord.Object(id=1006659664504688722))
 async def first_command(interaction: discord.Interaction, personagem: str):
     try:
         caminho_arquivo = "X:/RPG/Ficha detalhada/"+personagem+".docx"
@@ -22,7 +24,9 @@ async def first_command(interaction: discord.Interaction, personagem: str):
         
 @client.event
 async def on_message(ctx):
+    if ctx.author.id == 1149502315141808178:
         return
+    if ctx.channel.category_id == 1104798965678997607:
         if ctx.content.startswith('d'):
             a = str(ctx.content)
             a, b = a.split('d')
