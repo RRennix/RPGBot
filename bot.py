@@ -40,11 +40,18 @@ async def on_message(ctx):
                 c = random.randint(0,int(b))
                 resultados.append(c)
             await ctx.reply(f'''`{sum(resultados)}`⟵ **{resultados}** {a}d{b}''')
+        else:
+            message = ctx
+            mensagem = ctx.content
+            mensagem = bot(mensagem)    
+            await message.reply(mensagem)
     else:
         message = ctx
         mensagem = ctx.content
         mensagem = bot(mensagem)    
         await message.reply(mensagem)
 
-with open('token.txt') as token:
-    client.run(token)
+arquivo = open('token.txt','r')
+print(arquivo)
+token = arquivo.read()
+client.run(token)
