@@ -52,6 +52,6 @@ async def on_message(ctx):
         await message.reply(mensagem)
 
 arquivo = open('token.txt','r')
-print(arquivo)
 token = arquivo.read()
+print(token)
 client.run(token)
