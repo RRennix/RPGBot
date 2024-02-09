@@ -24,6 +24,7 @@ async def first_command(interaction: discord.Interaction, personagem: str):
         
 @client.event
 async def on_message(ctx):
+    testas = random.randint(1,10)
     if ctx.author.id == 1149502315141808178:
         return
     if ctx.channel.category_id == 1104798965678997607:
@@ -46,10 +47,17 @@ async def on_message(ctx):
             mensagem = bot(mensagem)    
             await message.reply(mensagem)
     else:
-        message = ctx
-        mensagem = ctx.content
-        mensagem = bot(mensagem)    
-        await message.reply(mensagem)
+        
+        if ctx.mentions[0].id == 1149502315141808178:
+            message = ctx
+            mensagem = ctx.content
+            mensagem = bot(mensagem)    
+            await message.reply(mensagem)
+        elif testas == 1:
+            message = ctx
+            mensagem = ctx.content
+            mensagem = bot(mensagem)    
+            await message.reply(mensagem)
 
 arquivo = open('token.txt','r')
 token = arquivo.read()
