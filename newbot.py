@@ -96,5 +96,5 @@ async def purge_command(interaction: discord.Interaction, amount: int):
 async def on_ready():
     await tree.sync(guild=discord.Object(id=1239947428359180339))
     print("Ready!")
-
-client.run(api_disc)
+def run_bot():
+    client.run(api_disc)

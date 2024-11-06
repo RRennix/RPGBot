@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle do Bot Discord</title>
+</head>
+<body>
+    <h1>Controle do Bot Discord</h1>
+    <button onclick="iniciarBot()">Iniciar Bot</button>
+    <div id="status"></div>
+
+    <script>
+        function iniciarBot() {
+            fetch('/start_bot')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('status').innerText = data;
+                });
+        }
+    </script>
+</body>
+</html>
