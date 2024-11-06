@@ -8,18 +8,13 @@ import json
 def carregar_historico(arquivo='historico.txt'):
     try:
         with open(arquivo, 'r', encoding='utf-8') as f:
-            return f.read().split('-;-')
+            return f.read().replace('-;-', '\n')
     except FileNotFoundError:
         return []  # Se o arquivo não existir, retorna uma lista vazia
-print(carregar_historico())
 # Função para salvar o histórico no arquivo
 def salvar_historico(historico, arquivo='historico.txt'):
-    entrada = f"Escreva isso de modo que você lembre o que é importante(salve um 'perfil' de cada usuário): {historico}"
-    response = chat.send_message(entrada)
-    resposta = response.text
-    historico = resposta
     with open(arquivo, 'w', encoding='utf-8') as f:
-        f.write(historico)
+        f.write('-;-'.join(historico))
 
 # Carregar a configuração
 with open('config.json', 'r') as config_file:
@@ -31,11 +26,8 @@ api_gemini = config['api_gemini']
 API_KEY = api_gemini
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro')
-# historico = []
-# Carregar o histórico do arquivo
 historico = []
 historic = carregar_historico()
-print(historico)
 chat = model.start_chat(history=historico)
 
 intents = discord.Intents.all()
@@ -44,16 +36,16 @@ tree = app_commands.CommandTree(client)
 
 @client.event
 async def on_ready():
-    entrada = f"Lembre-se disso:{historic}"
+    entrada = f"Sistema: Lembre-se disso:{historic}"
     response = chat.send_message(entrada)
     resposta = response.text
-    historico.append(entrada)
+    historico.append(historic)
     historico.append(resposta)
     salvar_historico(historico)  # Salvar o histórico atualizado
     print(resposta)
-    print(f"{client} is on")
-    print(carregar_historico())
-
+    await tree.sync(guild=discord.Object(id=1239947428359180339))
+    print("Ready!")
+    
 @client.event
 async def on_message(ctx):
     if ctx.author.id == 1149502315141808178:    
